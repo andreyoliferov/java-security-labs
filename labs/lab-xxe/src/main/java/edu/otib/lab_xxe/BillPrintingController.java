@@ -46,6 +46,10 @@ public class BillPrintingController {
             model.addAttribute("bill_name", billXmlFile.getName());
             // Process XML
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+
+            /* Защита от уязвимости XXE */
+            dbFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(billXmlFile.getInputStream());
             NodeList nList = doc.getElementsByTagName("product");
