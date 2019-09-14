@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>CSRF Example</title>
 </head>
 <body>
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 <form method="POST">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <input type="text" name="to" placeholder="Target account" style="margin:10px;width:300px;"/><br/>
     <input type="number" name="amount" placeholder="100" style="margin:10px;width:300px;"/><br/>
     <button type="submit" style="margin:10px;width:300px;">Submit post</button>

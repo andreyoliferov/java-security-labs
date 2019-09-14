@@ -1,5 +1,6 @@
 package edu.otib.lab_csrf.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,7 @@ public class TransferController {
         return "transfer_form";
     }
 
-    @PostMapping("/transfer")
+    @PostMapping(value = "/transfer" /*, consumes = MediaType.APPLICATION_JSON_VALUE*/)
     public String transfer(@RequestParam String to, @RequestParam Integer amount, Model model, Authentication authentication) {
         model.addAttribute("from", authentication.getName());
         model.addAttribute("to", to);
