@@ -8,7 +8,8 @@
 <h1>New Posts:</h1>
 <span th:each="post : ${posts}">
     <p th:utext="${post.text}">Post Text</p>
-    <p><i>Posted by <span th:utext="${post.author}">Author</span></i></p>
+    <!--<p><i>Posted by <span th:utext="${post.author}">Author</span></i></p>-->
+    <p><i>Posted by <span th:text="${post.author}">Author</span></i></p>
     <hr/>
 </span>
 <h3>Add Post:</h3>

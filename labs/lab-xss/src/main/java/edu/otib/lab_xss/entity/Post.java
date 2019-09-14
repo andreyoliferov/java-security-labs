@@ -1,5 +1,8 @@
 package edu.otib.lab_xss.entity;
 
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
+
 import java.util.Date;
 
 public class Post {
@@ -17,19 +20,19 @@ public class Post {
     }
 
     public String getAuthor() {
-        return author;
+        return sanitizer(author);
     }
 
     public void setAuthor(String author) {
-        this.author = author;
+        this.author = sanitizer(author);
     }
 
     public String getText() {
-        return text;
+        return sanitizer(text);
     }
 
     public void setText(String text) {
-        this.text = text;
+        this.text = sanitizer(text);
     }
 
     public Date getDateCreated() {
@@ -38,5 +41,11 @@ public class Post {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    /* Защита от уязвимости внедрения XSS */
+    private String sanitizer(String data) {
+        PolicyFactory sanitizer = Sanitizers.FORMATTING.and(Sanitizers.LINKS).and(Sanitizers.IMAGES);
+        return sanitizer.sanitize(data);
     }
 }
