@@ -17,7 +17,8 @@ public class ArticleDAO implements IArticleDAO {
     private JdbcTemplate jdbcTemplate;
 
     final static String SQL_GET_ALL_ARTICLES = "SELECT id, title, text FROM article";
-    final static String SQL_GET_ARTICLE_BY_ID = "SELECT id, title, text FROM article WHERE id = ";
+    //final static String SQL_GET_ARTICLE_BY_ID = "SELECT id, title, text FROM article WHERE id =";
+    final static String SQL_GET_ARTICLE_BY_ID = "SELECT id, title, text FROM article WHERE id = ?";
 
     @Override
     public List<Article> getAllAtricles() {
@@ -28,7 +29,9 @@ public class ArticleDAO implements IArticleDAO {
     @Override
     public Article getArticleById(String id) {
         RowMapper<Article> rowMapper = new ArticleRowMapper();
-        Article article = jdbcTemplate.queryForObject(SQL_GET_ARTICLE_BY_ID + id, rowMapper);
+        //Article article = jdbcTemplate.queryForObject(SQL_GET_ARTICLE_BY_ID + id, rowMapper);
+        /* Защита от уязвимости Sql-inject (Sql-инъекция) */
+        Article article = jdbcTemplate.queryForObject(SQL_GET_ARTICLE_BY_ID, new Object[] { id }, rowMapper);
         return article;
     }
 }
