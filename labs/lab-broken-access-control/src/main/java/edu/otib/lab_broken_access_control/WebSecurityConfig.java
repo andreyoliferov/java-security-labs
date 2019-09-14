@@ -17,17 +17,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/hello").hasRole("USER");
-        http
-                .authorizeRequests()
-                    .antMatchers("/", "/home").permitAll()
-                    .and()
+                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/hello", "/secret").hasRole("USER")
+                .anyRequest().denyAll() /* Отклонить все запросы по умолчанию, защита от несанкционированного доступа */
+                .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                    .and()
+                .loginPage("/login")
+                .permitAll()
+                .and()
                 .logout()
-                    .permitAll();
+                .permitAll();
     }
 
     @Bean
